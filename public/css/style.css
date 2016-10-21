@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+#gifs {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+}
+.gif {
+  margin: 1em 0 1em;
+}
+
+#buttons {
+  margin-bottom: 2em;
+}
+
+button {
+  padding: 2em 3em;
+  border-radius: 5px;
+  background-color: indianred;
+  color: #fff;
+  outline: 0;
+  border: 0;
+  margin: 0.25em;
+}
+
+input {
+  display: block;
+  width: 120px;
+  height: 20px;
+  margin: 2em 0 2em;
+}
