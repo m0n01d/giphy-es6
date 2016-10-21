@@ -1,0 +1,17 @@
+{
+  "name": "giphy-es6",
+  "version": "1.0.0",
+  "description": "es6 workshop for the ucf coding bootcamp. going over the giphy homework in es6",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run browser & npm run watch",
+    "browser": "browser-sync start --browser \"google chrome\" --server --ss public --files public/*",
+    "watch": "watchify ./app/main.js -o public/bundle.js"
+  },
+  "author": "dwight doane",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.17.0"
+  }
+}
