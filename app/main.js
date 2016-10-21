@@ -11,3 +11,12 @@ const topics = [
   'hedgehog',
   'frog',
 ];
+
+class App {
+  constructor() {
+
+  }
+
+}
+
+new App;
