@@ -11,6 +11,13 @@
 }
 .gif {
   margin: 1em 0 1em;
+  flex: 33% 0 1;
+}
+
+img {
+  margin: 0 auto;
+  display: block;
+  max-width: 100%;
 }
 
 #buttons {
