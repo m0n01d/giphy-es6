@@ -13,7 +13,8 @@ let topics = [
 ];
 
 class ButtonGroup {
-  constructor({handleClick}) {
+  constructor({handleClick, topics}) {
+    this.topics = topics;
     this.$buttons = document.getElementById('buttons');
     this.$buttons.addEventListener('click', e => handleClick(e.target.dataset.topic), false);
     this.renderAll();
@@ -23,7 +24,7 @@ class ButtonGroup {
   }
   renderAll() {
     this.$buttons.innerHTML = '';
-    this.$buttons.innerHTML = topics.map(this.renderOne).join('')
+    this.$buttons.innerHTML = this.topics.map(this.renderOne).join('')
   }
 }
 
@@ -43,10 +44,12 @@ const renderGif = ({original, still, playing, rating}, i) => {
   const playingImg = `<img class="gif__img" src="${original}" />`;
   const pausedImg = `<img class="gif__img" src="${still}" />`;
   const Img = playing ? playingImg : pausedImg;
-  return `<div class="gif" data-index="${i}">
-    ${Img}
-    <p>Raing: ${rating}</p>
-  </div>`
+  return (
+    `<div class="gif" data-index="${i}">
+      ${Img}
+      <p>Raing: ${rating}</p>
+    </div>`
+  );
 };
 
 class GifSet {
@@ -70,6 +73,7 @@ class App {
       onEnter: this.addBtn.bind(this),
     });
     this.btnGrp = new ButtonGroup({
+      topics,
       handleClick: this.btnClick.bind(this),
     });
     this.gifSet = new GifSet({
@@ -97,7 +101,7 @@ class App {
       });
   }
   addBtn(topic) {
-    topics = [topic, ...topics];
+    this.btnGrp.topics.push(topic)
     this.btnGrp.renderAll();
   }
   togglePlay(index) {
