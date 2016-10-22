@@ -13,7 +13,8 @@ let topics = [
 ];
 
 class ButtonGroup {
-  constructor({handleClick}) {
+  constructor({handleClick, topics}) {
+    this.topics = topics;
     this.$buttons = document.getElementById('buttons');
     this.$buttons.addEventListener('click', e => handleClick(e.target.dataset.topic), false);
     this.renderAll();
@@ -23,13 +24,14 @@ class ButtonGroup {
   }
   renderAll() {
     this.$buttons.innerHTML = '';
-    this.$buttons.innerHTML = topics.map(this.renderOne).join('')
+    this.$buttons.innerHTML = this.topics.map(this.renderOne).join('')
   }
 }
 
 class App {
   constructor() {
     this.btnGrp = new ButtonGroup({
+      topics,
       handleClick: this.btnClick.bind(this),
     });
   }
