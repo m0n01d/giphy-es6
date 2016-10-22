@@ -39,9 +39,9 @@ class AddTopic {
   }
 }
 
-const renderGif = ({images, rating, playing}, i) => {
-  const playingImg = `<img class="gif__img" src="${images.fixed_width.webp}" />`;
-  const pausedImg = `<img class="gif__img" src="${images.original_still.url}" />`;
+const renderGif = ({original, still, playing, rating}, i) => {
+  const playingImg = `<img class="gif__img" src="${original}" />`;
+  const pausedImg = `<img class="gif__img" src="${still}" />`;
   const Img = playing ? playingImg : pausedImg;
   return `<div class="gif" data-index="${i}">
     ${Img}
@@ -85,8 +85,11 @@ class App {
       .then(res => res.json())
       .then(res => {
         return this.gifs = res.data.map(gif => {
-          gif.playing = false;
-          return gif;
+          const original = gif.images.original.url;
+          const still = gif.images.original_still.url;
+          const { rating } = gif;
+          const playing = false;
+          return { original, still, playing, rating };
         })}
       )
       .then(() => {
