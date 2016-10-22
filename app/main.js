@@ -4,7 +4,7 @@ const giphy = `http://api.giphy.com/v1/gifs/search?q=`
 let topics = [
   'cats',
   'dogs',
-  'penguins',i
+  'penguins',
   'giraffes',
   'elephants',
   'dragons',
@@ -39,18 +39,28 @@ class AddTopic {
   }
 }
 
+const renderGif = ({images, rating, playing}, i) => {
+  const playingImg = `<img class="gif__img" src="${images.fixed_width.webp}" />`;
+  const pausedImg = `<img class="gif__img" src="${images.original_still.url}" />`;
+  const Img = playing ? playingImg : pausedImg;
+  return `<div class="gif" data-index="${i}">
+    ${Img}
+    <p>Raing: ${rating}</p>
+  </div>`
+};
+
 class GifSet {
-  constructor({gifs, renderGifs}) {
+  constructor({gifs, renderGifs, handleClick}) {
     this.$gifs = document.getElementById('gifs');
+
+    this.$gifs.addEventListener('click', (e) => {
+      const index = e.target.parentElement.dataset.index;
+      handleClick(index);
+    }, false);
   }
   renderGifs(gifs) {
     this.$gifs.innerHTML = '';
-    this.$gifs.innerHTML = gifs.map(gif => (
-      `<div class="gif">
-        <img class="gif__img" src="${gif.images.fixed_width.webp}" />
-        <p>Raing: ${gif.rating}</p>
-      </div>`
-    ))
+    this.$gifs.innerHTML = gifs.map(renderGif)
   }
 }
 
@@ -64,19 +74,32 @@ class App {
     });
     this.gifSet = new GifSet({
       gifs: [],
-      renderGifs: this.renderGifs
-    })
+      renderGifs: this.renderGifs,
+      handleClick: this.togglePlay.bind(this)
+    });
+
+    this.gifs = [];
   }
   btnClick(topic) {
     fetch(`${giphy}${topic}${key}`)
       .then(res => res.json())
       .then(res => {
-        this.gifSet.renderGifs(res.data)
+        return this.gifs = res.data.map(gif => {
+          gif.playing = false;
+          return gif;
+        })}
+      )
+      .then(() => {
+        this.gifSet.renderGifs(this.gifs)
       });
   }
   addBtn(topic) {
     topics = [topic, ...topics];
     this.btnGrp.renderAll();
+  }
+  togglePlay(index) {
+    this.gifs[index].playing = !this.gifs[index].playing;
+    this.gifSet.renderGifs(this.gifs);
   }
 }
 
