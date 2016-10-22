@@ -74,7 +74,7 @@ class App {
     });
     this.btnGrp = new ButtonGroup({
       topics,
-      handleClick: this.btnClick.bind(this),
+      handleClick: this.fetchGifs.bind(this),
     });
     this.gifSet = new GifSet({
       gifs: [],
@@ -84,7 +84,7 @@ class App {
 
     this.gifs = [];
   }
-  btnClick(topic) {
+  fetchGifs(topic) {
     fetch(`${giphy}${topic}${key}`)
       .then(res => res.json())
       .then(res => {
