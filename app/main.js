@@ -63,7 +63,7 @@ class GifSet {
   }
   renderGifs(gifs) {
     this.$gifs.innerHTML = '';
-    this.$gifs.innerHTML = gifs.map(renderGif)
+    this.$gifs.innerHTML = gifs.map(renderGif).join('');
   }
 }
 
